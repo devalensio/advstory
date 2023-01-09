@@ -194,23 +194,29 @@ class ContentViewState extends State<ContentView> {
               },
             ),
           ),
-          ValueListenableBuilder(
-            valueListenable: _provider!.positionNotifier,
-            builder: (context, value, child) {
-              return value == widget.storyIndex
-                  ? StoryIndicator(
-                      activeIndicatorIndex: _pageController!.page?.toInt() ??
-                          _pageController!.initialPage.toInt(),
-                      count: widget.story.contentCount,
-                      controller:
-                          _provider!.controller.flowManager.indicatorController,
-                      style: _provider!.style.indicatorStyle,
-                    )
-                  : StoryIndicator.placeholder(
-                      count: widget.story.contentCount,
-                      style: _provider!.style.indicatorStyle,
-                    );
-            },
+          SafeArea(
+            top: true,
+            left: false,
+            right: false,
+            bottom: false,
+            child: ValueListenableBuilder(
+              valueListenable: _provider!.positionNotifier,
+              builder: (context, value, child) {
+                return value == widget.storyIndex
+                    ? StoryIndicator(
+                        activeIndicatorIndex: _pageController!.page?.toInt() ??
+                            _pageController!.initialPage.toInt(),
+                        count: widget.story.contentCount,
+                        controller: _provider!
+                            .controller.flowManager.indicatorController,
+                        style: _provider!.style.indicatorStyle,
+                      )
+                    : StoryIndicator.placeholder(
+                        count: widget.story.contentCount,
+                        style: _provider!.style.indicatorStyle,
+                      );
+              },
+            ),
           ),
         ],
       ),
